@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cubit - Cube Calculator</title>
+    <!-- Tailwind CSS for Styling -->
+    <script src="https://tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 flex items-center justify-center min-h-screen font-sans">
+
+    <div class="bg-white p-8 rounded-2xl shadow-lg max-w-sm w-full mx-4 border border-slate-100">
+        <!-- Header -->
+        <div class="text-center mb-6">
+            <h1 class="text-3xl font-extrabold text-indigo-600 tracking-tight">Cubit</h1>
+            <p class="text-sm text-slate-500 mt-1">Calculate the cube of any number instantly</p>
+        </div>
+
+        <!-- Input Form -->
+        <div class="space-y-4">
+            <div>
+                <label for="numberInput" class="block text-sm font-semibold text-slate-700 mb-1">Enter a number</label>
+                <input 
+                    type="number" 
+                    id="numberInput" 
+                    placeholder="e.g., 5" 
+                    class="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+                >
+            </div>
+            
+            <button 
+                onclick="calculateCube()" 
+                class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 rounded-lg transition active:scale-[0.98]"
+            >
+                Calculate Cube
+            </button>
+        </div>
+
+        <!-- Result Display -->
+        <div id="resultContainer" class="mt-6 p-4 bg-indigo-50 rounded-xl border border-indigo-100 text-center hidden">
+            <p class="text-xs font-semibold uppercase tracking-wider text-indigo-500">Result</p>
+            <p id="resultText" class="text-xl font-bold text-slate-800 mt-1"></p>
+        </div>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        function calculateCube() {
+            const input = document.getElementById('numberInput');
+            const resultContainer = document.getElementById('resultContainer');
+            const resultText = document.getElementById('resultText');
+            
+            const num = parseFloat(input.value);
+
+            if (isNaN(num)) {
+                resultContainer.classList.remove('hidden');
+                resultContainer.classList.remove('bg-indigo-50', 'border-indigo-100');
+                resultContainer.classList.add('bg-rose-50', 'border-rose-100');
+                resultText.innerHTML = `<span class="text-rose-600 text-sm font-medium">Please enter a valid number.</span>`;
+                return;
+            }
+
+            // Math.pow(x, 3) or x ** 3
+            const cube = Math.pow(num, 3);
+            
+            // Format number to remove trailing decimals if whole, or limit to 4 decimal places
+            const formattedCube = Number(cube.toFixed(4)); 
+
+            // Display UI updates
+            resultContainer.classList.remove('hidden', 'bg-rose-50', 'border-rose-100');
+            resultContainer.classList.add('bg-indigo-50', 'border-indigo-100');
+            resultText.innerHTML = `${num}³ = <span class="text-indigo-600">${formattedCube}</span>`;
+        }
+
+        // Allow calculation by pressing "Enter" key
+        document.getElementById('numberInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                calculateCube();
+            }
+        });
+    </script>
+</body>
+</html>
