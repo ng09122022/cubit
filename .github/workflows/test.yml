@@ -22,7 +22,7 @@ jobs:
         run: python -m playwright install chromium --with-deps
       - name: Run tests
         run: |
-          cd cubeit
+          cd cubit
           python -m http.server 8000 &
           cd ..
           pytest -v 
